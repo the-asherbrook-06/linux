@@ -1,0 +1,96 @@
+1) IPC using popen() and pclose()
+	#include <stdio.h>
+	#include <string.h>
+
+	int main() {
+	    FILE *rd;
+	    char buffer[50];
+	    sprintf(buffer, "name first");
+
+	    rd = popen("wc -c", "w");  // open pipe to process "wc -c"
+	    if (rd == NULL) {
+		perror("popen failed");
+		return 1;
+	    }
+
+	    fwrite(buffer, sizeof(char), strlen(buffer), rd);  // write to the pipe
+	    pclose(rd);  // close pipe
+	    return 0;
+	}
+
+2) IPC using pipe() and fork()
+	#include <stdio.h>
+	#include <unistd.h>
+	#include <sys/types.h>
+	#include <sys/wait.h>
+
+	int main() {
+	    int fd[2], n;
+	    char buffer[100];
+	    pid_t p;
+
+	    pipe(fd);  // create a pipe
+	    p = fork();
+
+	    if (p > 0) {  // Parent process
+		printf("Parent Passing value to child\n");
+		write(fd[1], "hello\n", 6);  // write end
+		wait(NULL);  // wait for child
+	    } else if (p == 0) {  // Child process
+		printf("Child printing received value\n");
+		n = read(fd[0], buffer, 100);  // read end
+		write(1, buffer, n);  // write to stdout
+	    } else {
+		perror("fork failed");
+	    }
+
+	    return 0;
+	}
+	
+3) IPC using Named Pipe (FIFO)
+a) Create FIFO (1.c)
+	#include <stdio.h>
+	#include <sys/types.h>
+	#include <sys/stat.h>
+
+	int main() {
+	    int res;
+	    res = mkfifo("fifo1", 0777);  // create named pipe
+	    if (res == 0)
+		printf("Named pipe created\n");
+	    else
+		perror("mkfifo");
+	    return 0;
+	}
+
+b) Write to FIFO (sender.c)
+	#include <unistd.h>
+	#include <stdio.h>
+	#include <fcntl.h>
+
+	int main() {
+	    int res;
+	    res = open("fifo1", O_WRONLY);  // open pipe for writing
+	    write(res, "Message", 7);       // write to FIFO
+	    printf("Sender Process %d sent the data\n", getpid());
+	    close(res);
+	    return 0;
+	}
+c) Read from FIFO (receiver.c)
+	#include <unistd.h>
+	#include <stdio.h>
+	#include <fcntl.h>
+
+	int main() {
+	    int res, n;
+	    char buffer[100];
+	    res = open("fifo1", O_RDONLY);  // open pipe for reading
+	    n = read(res, buffer, 100);     // read from FIFO
+	    buffer[n] = '\0';               // null-terminate string
+	    printf("Reader process %d started\n", getpid());
+	    printf("Data received by receiver %d is: %s\n", getpid(), buffer);
+	    close(res);
+	    return 0;
+	}
+ 
+
