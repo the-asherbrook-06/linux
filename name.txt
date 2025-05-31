@@ -1,0 +1,27 @@
+1)  LINUX COMMANDS                                       -
+2)  SHELL PROGRAMMING                                    calculator.sh
+3)  PATTERN GENERATION                                   pattern.sh
+4)  FIBONACCI                                            fibonacci.sh
+5)  FORK SYSTEM CALL                                     fork.c
+6)  WAIT SYSTEM CALL                                     wait.c
+7)  EXECL SYSTEM CALL                                    execl.c
+8)  STAT SYSTEM CALL                                     stat.c
+9)  INTERPROCESS COMMUNICATION - popen(), pclose()       IPC_1.c
+10) INTERPROCESS COMMUNICATION - pipe()                  IPC_2.c
+11) INTERPROCESS COMMUNICATION - sender, reciever        IPC_sender.c
+                                                         IPC_reciever.c
+12) ZOMBIE PROCESS                                       zombie.c
+13) ORPHAN PROCESS                                       orphan.c
+14) THREADING                                            threading.c
+15) SYNCHRONIZATION - MUTEX                              synchronization.c
+16) FCFS SCHEDULING                                      fcfs.c
+17) SJF SCHEDULING                                       sjf.c
+18) ROUND ROBIN SCHEDULING                               roundrobin.c
+19) PRIORITY SCHEDULING                                  priority.c
+20) PRODUCER-CONSUMER PROBLEM                            producer-consumer.c
+21) DINING-PHILOSOPHERS PROBLEM                          dining-philosophers.c
+22) BANKER'S ALGORITHM                                   bankers-algorithm.c
+23) LINUX CONFIG                                         LAB.txt
+24) LINKED FILE ALLOCATION                               linked-file-alloc.c
+25) INDEXED FILE ALLOCATION                              indexed-file-alloc.c
+26) SEQUENTIAL FILE ALLOCATION                           sequential-file-alloc.c
